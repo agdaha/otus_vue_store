@@ -1,1 +1,1 @@
-# otus_vue_store
+## Otus Vue Store
