@@ -29,6 +29,11 @@
 
             <div> feedbacks: {{ product.rating.count }}</div>
         </div>
+        <div class="buttons">
+            <button>edit</button>
+            <button>Add to Cart</button>
+        </div>
+       
     </div>
 </template>
 
@@ -123,5 +128,11 @@ a:hover {
 
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-self: self-end;
 }
 </style>

@@ -38,6 +38,7 @@
 </script>
 
 <template>
+
   <header>
     <div class="logo">
       <a href="#">
@@ -64,15 +65,22 @@
   </main>
 
   <footer></footer>
+
 </template>
 
 <style scoped>
+
   .logo {
     display: flex;
     align-items: center;
     will-change: filter;
     transition: filter 300ms;
   }
+
+  /* .wrapper {
+    max-width: 1440px ;
+    margin: 0 20px;
+  } */
 
   .logo:hover {
     filter: drop-shadow(0 0 2em #646cffaa);
@@ -95,16 +103,16 @@
 
   .categories {
     float: right;
-    width: 200px;
+    /* width: 200px; */
     display: flex;
     flex-direction: column;
     padding: auto;
   }
 
   .products {
-    grid-gap: 10px;
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
+    gap: 10px;
+    display: flex;
+    flex-wrap: wrap;
     justify-items: center;
     align-items: stretch;
     justify-content: flex-start;
@@ -112,9 +120,9 @@
   }
 
   .product-card {
-    grid-column-start: span 3;
-    height: 100%;
-    width: 100%;
+    
+    height: auto;
+    width: 240px;
     align-items: stretch;
     border-top: 1px solid rgba(204, 214, 228, .6);
     box-sizing: border-box;
@@ -124,6 +132,6 @@
     flex-direction: column;
     justify-content: flex-start;
     justify-self: stretch;
-    position: relative;
+    /* position: relative; */
   }
 </style>
