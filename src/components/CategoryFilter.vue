@@ -1,19 +1,27 @@
 <template>
-    <h2>Category</h2>
-    <div class="filter">
-        <div v-for="c in categoryList" :key="c">
-            <input type="checkbox" :name=c[0] v-model="c[1]" @change="emit('toggle', c)"><span>{{ c[0] }}</span>
-        </div>
+  <h2>Category</h2>
+  <div class="filter">
+    <div v-for="category in categoryList" :key="category">
+      <input
+        type="checkbox"
+        :name="category[0]"
+        v-model="category[1]"
+        @change="emit('toggle', category)"
+      /><span class='category-name'>{{ category[0] }}</span>
     </div>
+  </div>
 </template>
 
 <script setup>
-    const emit = defineEmits(['toggle'])
-    const props = defineProps(['categoryList']);
+  const emit = defineEmits(["toggle"]);
+  const props = defineProps(["categoryList"]);
 </script>
 
 <style scoped>
 .filter {
-    margin: 0 20px;
+  margin: 0 20px;
+}
+.category-name {
+  padding-left: 10px;
 }
 </style>

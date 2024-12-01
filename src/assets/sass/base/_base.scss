@@ -1,0 +1,25 @@
+@use '../abstract/constants';
+
+body {
+    background-color: constants.$bg-color;
+}
+
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+    
+}
+
+h1, h2 {
+        color: #1b75bc;
+}
+
+#app {
+    max-width: 1440px;
+    padding: 0 20px;
+    margin: auto;
+}
+
+a {
+    text-decoration: inherit;
+}
