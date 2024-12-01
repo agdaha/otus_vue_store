@@ -13,8 +13,7 @@
     </div>
     <div class="wrapper">
       <div class="nav">
-        <search-panel @onsearch="changeSearchString"></search-panel>
-        <cart></cart>
+        <cart :itemCount="0" :sumItemsPrice="0"></cart>
       </div>
     </div>
   </header>
@@ -27,7 +26,10 @@
   </aside>
 
   <main>
-    <h2>Products</h2>
+    <div class="products-header">
+      <h2>Products</h2>
+      <search-panel @onsearch="changeSearchString"></search-panel>
+    </div>
 
     <div class="products">
       <card
@@ -52,21 +54,6 @@
   import axios from "axios";
 
   const products = ref([]);
-  const categories = reactive(new Map());
-  const searchString = ref("");
-
-  const changeSearchString = function (name) {
-    searchString.value = name;
-  };
-
-  const filteredProducts = computed(() => {
-    return products.value
-      .filter((p) => categories.has(p.category) && categories.get(p.category))
-      .filter((itm) =>
-        itm.title.toLowerCase().includes(searchString.value.toLowerCase())
-      );
-  });
-
   axios
     .get("https://fakestoreapi.com/products")
     .then((response) => {
@@ -76,10 +63,26 @@
         categorySet.add(p.category);
       }
       for (let p of categorySet.values()) {
-        categories.set(p, true);
+        categories.value.set(p, true);
       }
     })
     .catch((e) => console.log(e));
+
+  const categories = ref(new Map());
+  const searchString = ref("");
+
+
+  const changeSearchString = function (name) {
+    searchString.value = name;
+  };
+
+  const filteredProducts = computed(() => {
+    return products.value
+      .filter((p) => categories.value.has(p.category) && categories.value.get(p.category))
+      .filter((itm) =>
+        itm.title.toLowerCase().includes(searchString.value.toLowerCase())
+      );
+  });
 
   const toggleCategory = function (c) {
     if (categories.has(c[0])) categories.set(c[0], c[1]);
@@ -118,7 +121,7 @@ header {
   justify-content: space-between;
 }
 
-.nav{
+.nav {
   display: flex;
   align-items: center;
   gap: 40px;
@@ -138,6 +141,11 @@ h1 {
   font-size: 3em;
 }
 
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .categories {
   float: right;
   width: 200px;

@@ -1,29 +1,29 @@
 <template>
   <div class="cart">
     <div class="cart-img">
-      <img src="../assets/img/cart.svg" width="64" height="64" />
+      <img src="../assets/img/cart.svg" width="48" height="48" />
     </div>
     <div class="cart-info">
       <span> {{ itemCount }} items</span>
-      <span> {{ sumItems }} $</span>
+      <span> {{ sumItemsPrice }} $</span>
     </div>
   </div>
 </template>
 
 <script setup>
   import { ref } from "vue";
-  const itemCount = ref(0);
-  const sumItems = ref(0);
+  defineProps(["itemCount", "sumItemsPrice"])
 </script>
     
 
 <style scoped>
 .cart {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .cart-info {
+    margin-left: 10px;
     display: flex;
     flex-direction: column;
 }

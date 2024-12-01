@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="search-panel">
     <label>Поиск по названию: </label>
     <input type="text" v-model="name" @keyup.enter="$emit('onsearch', name)"/>
     <button @click="$emit('onsearch', name)">Найти</button>
@@ -12,4 +12,8 @@
   const emit = defineEmits(["onsearch"]);
 </script>
 
-<style></style>
+<style  scoped>
+.search-panel{
+  padding-right: 40px;
+}
+</style>

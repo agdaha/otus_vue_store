@@ -5,8 +5,13 @@ class ProductStore {
       }
   
       ProductStore._instance = this;
+      const products = [];
       return this;
     }
-    const 
+
+    Add(product) {
+      this.products.push(product)
+    }
+  
   }
   export default new ProductStore();
