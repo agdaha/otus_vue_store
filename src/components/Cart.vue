@@ -5,14 +5,14 @@
     </div>
     <div class="cart-info">
       <span> {{ itemCount }} items</span>
-      <span> {{ sumItemsPrice }} $</span>
+      <span> {{ sumCart }} $</span>
     </div>
   </div>
 </template>
 
 <script setup>
   import { ref } from "vue";
-  defineProps(["itemCount", "sumItemsPrice"])
+  defineProps(["itemCount", "sumCart"])
 </script>
     
 

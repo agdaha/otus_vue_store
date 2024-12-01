@@ -38,13 +38,15 @@
 
       <div>feedbacks: {{ product.rating.count }}</div>
     </div>
-    <div class="cart-button"><button>Add to Cart</button></div>
+    <div class="cart-button">
+      <button @click="$emit('addCart', product)">Add to Cart</button>
+      </div>
   </div>
 </template>
 
 <script setup>
   import { computed } from "vue";
-  const emit = defineEmits(["selected"]);
+  const emit = defineEmits(["selected","addCart"]);
   const props = defineProps(["product"]);
   const bgImg = computed(() => {
     return `background-image: url("${props.product.image}")`;

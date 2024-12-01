@@ -13,7 +13,7 @@
     </div>
     <div class="wrapper">
       <div class="nav">
-        <cart :itemCount="0" :sumItemsPrice="0"></cart>
+        <cart :itemCount="itemCount" :sumCart="sumCart"></cart>
       </div>
     </div>
   </header>
@@ -35,6 +35,7 @@
       <card
         class="product-card"
         @selected="selectOne"
+        @addCart="addCart"
         :product="product"
         v-for="product in filteredProducts"
         :key="product.id"
@@ -70,7 +71,34 @@
 
   const categories = ref(new Map());
   const searchString = ref("");
+  const cart = ref([]);
 
+  const itemCount = computed(() => {
+    let cnt = 0;
+    for (let item of cart.value) {
+      cnt += item.cnt;
+    }
+    return cnt;
+  });
+
+  const sumCart = computed(() => {
+    let sum = 0;
+    for (let item of cart.value) {
+      sum += item.cnt * item.price;
+    }
+    return sum;
+  });
+
+  const addCart = function (product) {
+    const f = cart.value.find((e) => e.id == product.id);
+    if (f) {
+      f.cnt +=1;
+    } else {
+      product.cnt = 1;
+      cart.value.push(product)
+    }
+
+  };
 
   const changeSearchString = function (name) {
     searchString.value = name;
@@ -78,7 +106,10 @@
 
   const filteredProducts = computed(() => {
     return products.value
-      .filter((p) => categories.value.has(p.category) && categories.value.get(p.category))
+      .filter(
+        (p) =>
+          categories.value.has(p.category) && categories.value.get(p.category)
+      )
       .filter((itm) =>
         itm.title.toLowerCase().includes(searchString.value.toLowerCase())
       );

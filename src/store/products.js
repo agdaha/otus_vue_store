@@ -12,6 +12,10 @@ class ProductStore {
     Add(product) {
       this.products.push(product)
     }
+
+    FindById() {
+      this.products.find()
+    }
   
   }
   export default new ProductStore();
