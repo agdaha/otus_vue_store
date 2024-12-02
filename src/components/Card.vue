@@ -3,7 +3,7 @@
     <div class="image" :style="bgImg"></div>
     <div class="price">
       <span> Price </span>
-      <span>{{ product.price }}$</span>
+      <span>${{ product.price }}</span>
     </div>
     <div class="title tooltip">
       <a href="#">
