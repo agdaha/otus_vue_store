@@ -5,8 +5,8 @@
         <img
           alt="Store logo"
           src="./assets/img/logo.svg"
-          width="64"
-          height="64"
+          width="48"
+          height="48"
         />
       </a>
       <h1>Online Store</h1>
@@ -185,9 +185,6 @@ header {
   list-style: none;
 }
 
-h1 {
-  font-size: 3em;
-}
 
 .products-header {
   display: flex;

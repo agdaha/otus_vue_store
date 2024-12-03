@@ -1,7 +1,7 @@
 <template>
   <div class="cart" @click="$emit('onclick')">
     <div class="cart-img">
-      <img src="../assets/img/cart.svg" width="48" height="48" />
+      <img src="../assets/img/cart.svg" width="32" height="32" />
     </div>
     <div class="cart-info">
       <span> {{ itemCount }} items</span>
