@@ -1,5 +1,5 @@
 <template>
-  <h2>Category</h2>
+  <h2>Категории</h2>
   <div class="filter">
     <div v-for="category in categoryList" :key="category">
       <input

@@ -31,8 +31,8 @@
 
   <main>
     <div class="products-header">
-      <h2>Products</h2>
-      <search-panel @onsearch="(name)=>searchString=name"></search-panel>
+      <h2>Товары</h2>
+      <search-panel @onsearch="(name) => (searchString = name)"></search-panel>
     </div>
 
     <div class="products">
@@ -47,13 +47,18 @@
     </div>
   </main>
 
-  <cart-view v-show="isCartShow" :cart="cart" @close="isCartShow = false" @checkout="checkout"/>
-  <checkout-view v-show="isCheckoutShow" @close="isCheckoutShow = false"/>
+  <cart-view
+    v-show="isCartShow"
+    :cart="cart"
+    @close="isCartShow = false"
+    @checkout="checkout"
+  />
+  <checkout-view v-show="isCheckoutShow" @close="isCheckoutShow = false" />
   <footer></footer>
 </template>
 
 <script setup>
-import { computed, reactive, ref } from "vue";
+import { computed, ref } from "vue";
 import Card from "./components/Card.vue";
 import CategoryFilter from "./components/CategoryFilter.vue";
 import SearchPanel from "./components/SearchPanel.vue";
@@ -71,6 +76,7 @@ axios
     const categorySet = new Set();
     for (let p of products.value) {
       categorySet.add(p.category);
+      p.cntInCart = 0;
     }
     for (let p of categorySet.values()) {
       categories.value.set(p, true);
@@ -78,7 +84,7 @@ axios
   })
   .catch((e) => console.log(e));
 
-// Фильтрованый каталог товаро
+// Фильтрованый каталог товаров
 const filteredProducts = computed(() => {
   return products.value
     .filter(
@@ -96,11 +102,11 @@ const toggleCategory = function (c) {
   if (categories.value.has(c[0])) categories.value.set(c[0], c[1]);
 };
 const selectOne = function (category) {
-  for (let key of categories.keys()) {
+  for (let key of categories.value.keys()) {
     if (key === category) {
-      categories.set(key, true);
+      categories.value.set(key, true);
     } else {
-      categories.set(key, false);
+      categories.value.set(key, false);
     }
   }
 };
@@ -109,36 +115,28 @@ const selectOne = function (category) {
 const searchString = ref("");
 
 //Корзина
-const cart = ref([]);
+const cart = computed(() => {
+  return products.value.filter((p) => p.cntInCart > 0);
+});
 const isCartShow = ref(false);
 
 const showCart = function () {
   isCartShow.value = true;
 };
-const itemCount = computed(() => {
-  let cnt = 0;
-  for (let item of cart.value) {
-    cnt += item.cnt;
-  }
-  return cnt;
-});
-const sumCart = computed(() => {
-  let sum = 0;
-  for (let item of cart.value) {
-    sum += item.cnt * item.price;
-  }
-  return sum.toFixed(2);
-});
-const addCart = function (product) {
-  const f = cart.value.find((e) => e.id == product.id);
-  if (f) {
-    f.cnt += 1;
-  } else {
-    product.cnt = 1;
-    cart.value.push(product);
-  }
-};
 
+const itemCount = computed(() => {
+  return cart.value.reduce((cnt, i) => (cnt += i.cntInCart), 0);
+});
+
+const sumCart = computed(() => {
+  return cart.value
+    .reduce((sum, i) => (sum += i.cntInCart * i.price), 0)
+    .toFixed(2);
+});
+
+const addCart = function (product) {
+  product.cntInCart += 1;
+};
 
 //Оформление заказа
 const isCheckoutShow = ref(false);
@@ -185,7 +183,6 @@ header {
   list-style: none;
 }
 
-
 .products-header {
   display: flex;
   justify-content: space-between;
@@ -210,7 +207,6 @@ header {
 }
 
 .product-card {
-  /* height: 100%; */
   width: 270px;
   align-items: stretch;
   border-top: 1px solid rgba(204, 214, 228, 0.6);

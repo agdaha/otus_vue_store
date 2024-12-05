@@ -14,7 +14,7 @@
     <div class="category">
       <i>Category:&nbsp; </i>
       <div class="category-item" @click="emit('selected', product.category)">
-        <b>{{ product.category }}</b>
+        <strong>{{ product.category }}</strong>
       </div>
     </div>
 
@@ -39,18 +39,20 @@
       <div>feedbacks: {{ product.rating.count }}</div>
     </div>
     <div class="cart-button">
-      <button @click="$emit('addCart', product)">Add to Cart</button>
-      </div>
+      <button @click="$emit('addCart', product)">🛒</button>
+      <div v-if="product.cntInCart > 0" class="incart">В корзине:&nbsp;
+        <input type="number" min="0" v-model="product.cntInCart" style="min-width:40px; max-width: 50px;"></div>
+    </div>
   </div>
 </template>
 
 <script setup>
-  import { computed } from "vue";
-  const emit = defineEmits(["selected","addCart"]);
-  const props = defineProps(["product"]);
-  const bgImg = computed(() => {
-    return `background-image: url("${props.product.image}")`;
-  });
+import { computed } from "vue";
+const emit = defineEmits(["selected", "addCart"]);
+const props = defineProps(["product"]);
+const bgImg = computed(() => {
+  return `background-image: url("${props.product.image}")`;
+});
 </script>
 
 <style scoped>
@@ -78,13 +80,18 @@ img {
 .category,
 .price,
 .rate {
-  padding: 10px 0;
+  padding: 6px 0;
 }
 
-.category {
+.category, .incart {
   display: flex;
   font-weight: 300;
   font-size: small;
+}
+
+.incart {
+  color: #1B75BC;
+  font-weight: bold;
 }
 
 .category-item:hover {
@@ -99,7 +106,7 @@ img {
 }
 
 .price {
-  font-size: larger;
+  font-size: large;
 }
 
 .rate {
@@ -138,12 +145,15 @@ a:hover {
 }
 
 .cart-button {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 20px;
   margin-top: auto;
-  padding-top: 12px;
   width: 100%;
 }
 
 .cart-button > button {
-    width: 100%;
+  padding: 2px 20px;
 }
 </style>
